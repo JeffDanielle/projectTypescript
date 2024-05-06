@@ -1,3 +1,18 @@
+// autobind decorator
+// _ is an optional parameter which is okay to not be use
+// function autobind(_: any, _2: string, descriptor: PropertyDescriptor) {
+//     console.log(descriptor);
+//     const originalMethod = descriptor.value;
+//     const adjDescriptor: PropertyDescriptor = {
+//         configurable: true,
+//         get() {
+//             const boundFn = originalMethod.bind(this);
+//             return boundFn;
+//         },
+//     };
+//     return adjDescriptor;
+// }
+// ProjectInput Class
 var ProjectInput = /** @class */ (function () {
     function ProjectInput() {
         this.templateElement = document.getElementById("project-input");
@@ -12,6 +27,7 @@ var ProjectInput = /** @class */ (function () {
         this.configure();
         this.attach();
     }
+    // @autobind
     ProjectInput.prototype.submitHandler = function (event) {
         event.preventDefault();
         console.log(this.titleInputElement.value);
