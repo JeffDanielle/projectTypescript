@@ -1,3 +1,19 @@
+// Project Type
+var ProjectStatus;
+(function (ProjectStatus) {
+    ProjectStatus[ProjectStatus["Active"] = 0] = "Active";
+    ProjectStatus[ProjectStatus["Finished"] = 1] = "Finished";
+})(ProjectStatus || (ProjectStatus = {}));
+var Project = /** @class */ (function () {
+    function Project(id, title, description, people, status) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.people = people;
+        this.status = status;
+    }
+    return Project;
+}());
 // Project State Management
 var ProjectState = /** @class */ (function () {
     function ProjectState() {
@@ -15,12 +31,7 @@ var ProjectState = /** @class */ (function () {
         this.listeners.push(listenerFn);
     };
     ProjectState.prototype.addProject = function (title, description, numOfPeople) {
-        var newProject = {
-            id: Math.random().toString(),
-            title: title,
-            description: description,
-            people: numOfPeople,
-        };
+        var newProject = new Project(Math.random().toString(), title, description, numOfPeople, ProjectStatus.Active);
         this.projects.push(newProject);
         for (var _i = 0, _a = this.listeners; _i < _a.length; _i++) {
             var listenerFn = _a[_i];
