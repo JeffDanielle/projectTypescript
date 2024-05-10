@@ -115,6 +115,24 @@ var Component = /** @class */ (function () {
     };
     return Component;
 }());
+// ProjectItem Class
+var ProjectItem = /** @class */ (function (_super) {
+    __extends(ProjectItem, _super);
+    function ProjectItem(hostId, project) {
+        var _this = _super.call(this, "single-project", hostId, false, project.id) || this;
+        _this.project = project;
+        _this.configure();
+        _this.renderContent();
+        return _this;
+    }
+    ProjectItem.prototype.configure = function () { };
+    ProjectItem.prototype.renderContent = function () {
+        this.element.querySelector("h2").textContent = this.project.title;
+        this.element.querySelector("h3").textContent = this.project.people.toString();
+        this.element.querySelector("p").textContent = this.project.description;
+    };
+    return ProjectItem;
+}(Component));
 // ProjectList Class
 var ProjectList = /** @class */ (function (_super) {
     __extends(ProjectList, _super);
@@ -149,9 +167,7 @@ var ProjectList = /** @class */ (function (_super) {
         listEl.innerHTML = "";
         for (var _i = 0, _a = this.assignedProjects; _i < _a.length; _i++) {
             var prjItem = _a[_i];
-            var listItem = document.createElement("li");
-            listItem.textContent = prjItem.title;
-            listEl === null || listEl === void 0 ? void 0 : listEl.append(listItem);
+            new ProjectItem(this.element.querySelector("ul").id, prjItem);
         }
     };
     return ProjectList;
