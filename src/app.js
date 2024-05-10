@@ -165,8 +165,22 @@ var ProjectList = /** @class */ (function (_super) {
         _this.renderContent();
         return _this;
     }
+    ProjectList.prototype.dragOverHandler = function (_) {
+        var listEl = this.element.querySelector("ul");
+        listEl.classList.add("droppable");
+        // listEl.classList.remove("droppable");
+        // listEl.addEventListener("dragover", this.dragOverHandler.bind(this, event));
+    };
+    ProjectList.prototype.dropHandler = function (_) { };
+    ProjectList.prototype.dragLeaveHandler = function (_) {
+        var listEl = this.element.querySelector("ul");
+        listEl.classList.remove("droppable");
+    };
     ProjectList.prototype.configure = function () {
         var _this = this;
+        this.element.addEventListener("dragover", this.dragOverHandler.bind(this));
+        this.element.addEventListener("dragleave", this.dragLeaveHandler.bind(this));
+        this.element.addEventListener("drop", this.dropHandler.bind(this));
         projectState.addListener(function (projects) {
             var relevantProjects = projects.filter(function (prj) {
                 if (_this.type === "active") {
