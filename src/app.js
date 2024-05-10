@@ -137,7 +137,16 @@ var ProjectItem = /** @class */ (function (_super) {
         enumerable: false,
         configurable: true
     });
-    ProjectItem.prototype.configure = function () { };
+    ProjectItem.prototype.dragStartHandler = function (event) {
+        console.log(event);
+    };
+    ProjectItem.prototype.dragEndHandler = function (_) {
+        console.log("DragEnd");
+    };
+    ProjectItem.prototype.configure = function () {
+        this.element.addEventListener("dragstart", this.dragStartHandler.bind(this));
+        this.element.addEventListener("dragend", this.dragEndHandler.bind(this));
+    };
     ProjectItem.prototype.renderContent = function () {
         this.element.querySelector("h2").textContent = this.project.title;
         this.element.querySelector("h3").textContent = this.persons + " assigned";
