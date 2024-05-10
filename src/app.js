@@ -56,6 +56,16 @@ var ProjectState = /** @class */ (function (_super) {
     ProjectState.prototype.addProject = function (title, description, numOfPeople) {
         var newProject = new Project(Math.random().toString(), title, description, numOfPeople, ProjectStatus.Active);
         this.projects.push(newProject);
+        this.updateListeners();
+    };
+    ProjectState.prototype.moveProject = function (projectId, newStatus) {
+        var project = this.projects.find(function (prj) { return prj.id === projectId; });
+        if (project && project.status !== newStatus) {
+            project.status = newStatus;
+            this.updateListeners();
+        }
+    };
+    ProjectState.prototype.updateListeners = function () {
         for (var _i = 0, _a = this.listeners; _i < _a.length; _i++) {
             var listenerFn = _a[_i];
             listenerFn(this.projects.slice());
@@ -176,7 +186,8 @@ var ProjectList = /** @class */ (function (_super) {
         // listEl.addEventListener("dragover", this.dragOverHandler.bind(this, event));
     };
     ProjectList.prototype.dropHandler = function (event) {
-        console.log(event.dataTransfer.getData("text/plain"));
+        var prjId = event.dataTransfer.getData("text/plain");
+        projectState.moveProject(prjId, this.type === "active" ? ProjectStatus.Active : ProjectStatus.Finished);
     };
     ProjectList.prototype.dragLeaveHandler = function (_) {
         var listEl = this.element.querySelector("ul");
